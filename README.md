@@ -7,13 +7,16 @@ Jangle Core did all the hard work: Storing content, publishing, history, authent
 
 This API is broken up into these major components:
 
-- [Authentication API](/jangle-cms/api#authentication-api)
-- [List API](/jangle-cms/api#list-api)
-- [Item API](/jangle-cms/api#item-api)
+- [Authentication API](#authentication-api)
+- [List API](#list-api)
+- [Item API]()
 
+---
 
 ## Authentication API
 > Creating users, signing in, getting tokens.
+
+---
 
 ### __Can Sign Up__
 > __`GET`__ `/api/auth/can-sign-up`
@@ -47,6 +50,7 @@ If another user already exists:
 }
 ```
 
+---
 
 ### __Sign Up__
 > __`POST`__ `/api/auth/sign-up`
@@ -105,6 +109,8 @@ If the user provided was invalid:
 }
 ```
 
+---
+
 ### __Sign In__
 > `GET` `/api/auth/sign-in`
 
@@ -159,35 +165,37 @@ The List API exposes Jangle Core's function using RESTful API standards. Once yo
 Here are all the endpoints for the List API
 
 __Viewing Items__
-- [Any]() - Returns if any items exist.
-- [Count]() - Returns how many items we have.
-- [Find]() - Finds items based on criteria.
-- [Get]() - Gets an item by id.
+- [Any](#any) - Returns if any items exist.
+- [Count](#count) - Returns how many items we have.
+- [Find](#find) - Finds items based on criteria.
+- [Get](#get) - Gets an item by id.
 
 __Editing Items__
-- [Create]() - Create a new item.
-- [Update]() - Fully replace an exising item.
-- [Patch]() - Partially update an exising item.
+- [Create](#create) - Create a new item.
+- [Update](#update) - Fully replace an exising item.
+- [Patch](#patch) - Partially update an exising item.
 
 __Removing Items__
-- [Remove]() - Remove an exising item.
-- [Restore]() - Restore a removed item.
+- [Remove](#remove) - Remove an exising item.
+- [Restore](#restore) - Restore a removed item.
 
 __History__
-- [History]() - View an item's history.
-- [Preview Rollback]() - Preview a rollback, before committing it.
-- [Rollback Version]() - Rollback to a previous version.
+- [History](#history) - View an item's history.
+- [Preview Rollback](#preview-rollback) - Preview a rollback, before committing it.
+- [Rollback Version](#rollback) - Rollback to a previous version.
 
 __Publishing__
-- [Publish]() - Publish an item.
-- [Unpublish]() - Unpublish an item.
-- [Is Live]() - Check if an item is published.
+- [Publish](#publish) - Publish an item.
+- [Unpublish](#unpublish) - Unpublish an item.
+- [Is Live](#is-live) - Check if an item is published.
 
 __Meta__
 - [Overview]() - View information about all lists.
 - [Schema]() - View detailed information about a list.
 
-### Note: Authentication & Tokens
+---
+
+### Authentication & Tokens
 
 Both the List and Items API have certain endpoints that require a user token to interact with our content.
 
@@ -195,7 +203,7 @@ If we try to view unpublished items, edit an item, or delete something, Jangle n
 
 Otherwise, anyone could hit these URLs and ruin our day!
 
-(The [Authentication API](/jangle-cms/api#authentication-api) has endpoints for retrieving a valid user token.)
+(The [Authentication API](#authentication-api) has endpoints for retrieving a valid user token.)
 
 
 #### How to provide a token to Jangle API
@@ -211,7 +219,7 @@ Protected endpoints will check these places for a user token:
     ```
     GET /api/lists/authors?token=our-token
     ```
-
+---
 
 ### __Overview__
 > __`GET`__ `/api/lists`
@@ -285,6 +293,8 @@ If no items were found:
 }
 ```
 
+---
+
 ### __Count__
 > __`GET`__ `/api/lists/:name/count`
 
@@ -323,6 +333,8 @@ If no items were found:
 }
 ```
 
+---
+
 ###  __Find__
 > __`GET`__ `/api/lists/:name`
 
@@ -359,12 +371,12 @@ If items were found:
 ```json
 {
     "error": false,
-    "message": "Found 10 people.",
+    "message": "Found 4 people.",
     "data": [
-        { ... },
-        { ... },
-        ...
-        { ... }
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ }
     ]
 }
 ```
@@ -378,6 +390,8 @@ If no items were found:
     "data": []
 }
 ```
+
+---
 
 ###  __Get__
 > __`GET`__ `/api/lists/:name/:id`
@@ -410,7 +424,7 @@ If the item was found:
     "message": "Found 1 person.",
     "data": {
         "name": "Ryan",
-        ...
+        /*...*/
     }
 }
 ```
@@ -424,6 +438,8 @@ If no items were found:
     "data": null
 }
 ```
+
+---
 
 ### __Create__
 > __`POST`__ `/api/lists/:name`
@@ -455,7 +471,7 @@ If the item was successfully created:
         "_id": 12345,
         "name": "Ryan",
         "age": 24,
-        "jangle": { "version": 1, ... }
+        "jangle": { "version": 1, /*...*/ }
     }
 }
 ```
@@ -469,6 +485,8 @@ If the item could not be created:
     "data": null
 }
 ```
+
+---
 
 ### __Update__
 > __`POST`__ `/api/lists/:name/:id`
@@ -500,7 +518,7 @@ If the item was successfully updated:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
@@ -514,6 +532,8 @@ If the item could not be updated:
     "data": null
 }
 ```
+
+---
 
 ### __Patch__
 > __`PATCH`__ `/api/lists/:name/:id`
@@ -559,6 +579,7 @@ If the item could not be updated:
 }
 ```
 
+---
 
 ### __Remove__
 > __`DELETE`__ `/api/lists/:name/:id`
@@ -587,7 +608,7 @@ If the item was successfully removed:
         "_id": 12345,
         "name": "Ryan",
         "age": 26,
-        "jangle": { "version": 3, ... }
+        "jangle": { "version": 3, /*...*/ }
     }
 }
 ```
@@ -601,6 +622,8 @@ If the item could not be created:
     "data": null
 }
 ```
+
+---
 
 ### __Restore__
 > __`POST`__ `/api/lists/:name/:id/restore`
@@ -642,6 +665,8 @@ If the item could not be restored:
 }
 ```
 
+---
+
 ### __History__
 > __`GET`__ `/api/lists/:name/:id/history`
 
@@ -664,10 +689,10 @@ If the item was found:
     "error": false,
     "message": "Found the item's history.",
     "data": [
-        { ... },
-        { ... },
-        ...
-        { ... }
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ }
     ]
 }
 ```
@@ -681,6 +706,8 @@ If the item could not be found:
     "data": null
 }
 ```
+
+---
 
 ### __Preview Rollback__
 > __`GET`__ `/api/lists/:name/:id/preview/:version`
@@ -707,7 +734,7 @@ If the version was found:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
@@ -721,6 +748,8 @@ If the item's rollback could not be previewed:
     "data": null
 }
 ```
+
+---
 
 ### __Rollback__
 > __`POST`__ `/api/lists/:name/:id/rollback/:version`
@@ -747,7 +776,7 @@ If the version was successfully rolled back:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
@@ -761,6 +790,8 @@ If the item could not be rolled back:
     "data": null
 }
 ```
+
+---
 
 ### __Publish__
 > __`POST`__ `/api/lists/:name/:id/publish`
@@ -800,6 +831,8 @@ If the item could not be published:
 }
 ```
 
+---
+
 ### __Unpublish__
 > __`POST`__ `/api/lists/:name/:id/unpublish`
 
@@ -837,6 +870,8 @@ If the item could not be unpublished:
     "data": null
 }
 ```
+
+---
 
 ### __Is Live__
 > __`GET`__ `/api/lists/:name/:id/is-live`
