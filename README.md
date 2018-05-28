@@ -32,7 +32,7 @@ GET /api/auth/can-sign-up
 
 If sign up is allowed:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign up allowed!",
@@ -42,7 +42,7 @@ If sign up is allowed:
 
 If another user already exists:
 
-```json
+```js
 {
     "error": false,
     "message": "Cannot sign up.",
@@ -65,7 +65,7 @@ Create a new user for our Jangle instance, if no other users exist in the system
 
 #### Example:
 
-```json
+```js
 {
     "name": "Ryan",
     "email": "ryan.nhg@gmail.com",
@@ -77,7 +77,7 @@ Create a new user for our Jangle instance, if no other users exist in the system
 
 If everything went okay, and the user was signed up:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign up successful!",
@@ -91,7 +91,7 @@ If everything went okay, and the user was signed up:
 
 If a user already exists (`/api/auth/can-sign-up` returned `false`):
 
-```json
+```js
 {
     "error": true,
     "message": "Admin user already exists.",
@@ -101,7 +101,7 @@ If a user already exists (`/api/auth/can-sign-up` returned `false`):
 
 If the user provided was invalid:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not create admin user.",
@@ -131,7 +131,7 @@ GET /api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy
 
 If the sign in was successful:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign in successful!",
@@ -145,7 +145,7 @@ If the sign in was successful:
 
 If that user doesn't exist or the password doesn't match:
 
-```json
+```js
 {
     "error": true,
     "message": "Failed to sign in.",
@@ -230,7 +230,7 @@ __Note:__ Requires user token.
 
 #### Returns
 
-```json
+```js
 {
     "error": false,
     "message": "Found 2 lists.",
@@ -275,7 +275,7 @@ GET /api/lists/people/any?where={ "name": "Ryan" }
 
 If any items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
@@ -285,7 +285,7 @@ If any items were found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
@@ -315,7 +315,7 @@ GET /api/lists/people/count?where={ "age": { "$gte": 24 } }
 
 If any items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
@@ -325,7 +325,7 @@ If any items were found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
@@ -368,7 +368,7 @@ GET /api/lists/people?populate=friends
 
 If items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 4 people.",
@@ -383,7 +383,7 @@ If items were found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
@@ -418,7 +418,7 @@ GET /api/lists/people/12345?populate=friends
 
 If the item was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
@@ -431,7 +431,7 @@ If the item was found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
@@ -452,7 +452,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "name": "Ryan",
     "age": 24
@@ -463,7 +463,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully created:
 
-```json
+```js
 {
     "error": false,
     "message": "Person created successfully!",
@@ -478,7 +478,7 @@ If the item was successfully created:
 
 If the item could not be created:
 
-```json
+```js
 {
     "error": true,
     "message": "Missing required fields: name.",
@@ -499,7 +499,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "name": "Ryan",
     "age": 25
@@ -510,7 +510,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully updated:
 
-```json
+```js
 {
     "error": false,
     "message": "Person updated successfully!",
@@ -525,7 +525,7 @@ If the item was successfully updated:
 
 If the item could not be updated:
 
-```json
+```js
 {
     "error": true,
     "message": "Missing required fields: age.",
@@ -546,7 +546,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "age": 26
 }
@@ -556,7 +556,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully updated:
 
-```json
+```js
 {
     "error": false,
     "message": "Person updated successfully!",
@@ -571,7 +571,7 @@ If the item was successfully updated:
 
 If the item could not be updated:
 
-```json
+```js
 {
     "error": true,
     "message": "age must be a number.",
@@ -600,7 +600,7 @@ DELETE /api/lists/people/12345
 
 If the item was successfully removed:
 
-```json
+```js
 {
     "error": false,
     "message": "Person removed successfully!",
@@ -615,7 +615,7 @@ If the item was successfully removed:
 
 If the item could not be created:
 
-```json
+```js
 {
     "error": true,
     "message": "age must be a number.",
@@ -642,7 +642,7 @@ POST /api/lists/people/12345/restore
 
 If the item was successfully restored:
 
-```json
+```js
 {
     "error": false,
     "message": "Person restored successfully!",
@@ -657,7 +657,7 @@ If the item was successfully restored:
 
 If the item could not be restored:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find a person with id: 12345.",
@@ -684,7 +684,7 @@ GET /api/lists/people/12345/history
 
 If the item was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found the item's history.",
@@ -699,7 +699,7 @@ If the item was found:
 
 If the item could not be found:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find a person with id: 12345.",
@@ -726,7 +726,7 @@ GET /api/lists/people/12345/preview/2
 
 If the version was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Previewing rollback!",
@@ -741,7 +741,7 @@ If the version was found:
 
 If the item's rollback could not be previewed:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find version 100.",
@@ -768,7 +768,7 @@ POST /api/lists/people/12345/rollback/2
 
 If the version was successfully rolled back:
 
-```json
+```js
 {
     "error": false,
     "message": "Person rolled back successfully!",
@@ -783,7 +783,7 @@ If the version was successfully rolled back:
 
 If the item could not be rolled back:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find version 100.",
@@ -810,7 +810,7 @@ POST /api/lists/people/12345/publish
 
 If the item was successfully published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person published successfully!",
@@ -823,7 +823,7 @@ If the item was successfully published:
 
 If the item could not be published:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
@@ -850,7 +850,7 @@ POST /api/lists/people/12345/unpublish
 
 If the item was successfully unpublished:
 
-```json
+```js
 {
     "error": false,
     "message": "Person unpublished successfully!",
@@ -863,7 +863,7 @@ If the item was successfully unpublished:
 
 If the item could not be unpublished:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
@@ -888,7 +888,7 @@ POST /api/lists/people/12345/is-live
 
 If the item is published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person is published.",
@@ -898,7 +898,7 @@ If the item is published:
 
 If the item is not published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person is not published.",
@@ -908,7 +908,7 @@ If the item is not published:
 
 If the item could not be found:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
