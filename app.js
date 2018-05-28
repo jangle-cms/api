@@ -1,34 +1,56 @@
+const jangle = require('../core/lib')
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
+const routes = {
+  auth: require('./routes/auth'),
+  notFound: require('./routes/not-found'),
+  error: require('./routes/error')
+}
+
 const start = ({
   api: {
     port = process.env.PORT || 3000,
-    prefix
+    prefix = ''
   } = {}
 } = {}) => {
+  const apiPath = `${prefix}/api`
+  const url = `http://localhost:${port}${apiPath}`
+  const relative = (path) => url + path
+
   const app = express()
   app.use(morgan('tiny'))
   app.use(bodyParser.json())
 
-  const router = express.Router()
+  return jangle
+    .start()
+    .then(core => {
+      const router = express.Router()
 
-  router.get('/api', (_req, res) => res.json({
-    message: 'Welcome to Jangle API!'
-  }))
+      // Top-level API
+      router.get('/', (_req, res) => res.json({
+        message: 'Welcome to Jangle API!',
+        routes: [
+          '/auth'
+        ].map(relative)
+      }))
 
-  if (prefix) {
-    app.use(prefix, router)
-  } else {
-    app.use(router)
-  }
+      // Authentication API
+      router.use('/auth', routes.auth(core, express.Router(), {
+        relative: (path) => relative('/auth' + path)
+      }))
 
-  app.listen(port, () =>
-    console.info(`Jangle API ready at http://localhost:${port}${prefix || ''}/api`)
-  )
+      app.use(apiPath, router)
+      app.use(prefix, routes.notFound)
+      app.use(prefix, routes.error)
 
-  return app
+      app.listen(port, () =>
+        console.info(`Jangle API ready at ${url}`)
+      )
+
+      return app
+    })
 }
 
 module.exports = {
