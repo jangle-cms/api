@@ -1,4 +1,4 @@
-const jangle = require('../core/lib')
+const jangle = require('../core')
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')

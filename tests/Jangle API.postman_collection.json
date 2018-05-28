@@ -1,0 +1,98 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Jangle API",
+		"_postman_id": "542ff628-06e9-3d3c-48c9-4dd9ddef27f2",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication API",
+			"description": "",
+			"item": [
+				{
+					"name": "/api/auth/can-sign-up",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"type": "text/javascript",
+								"exec": [
+									"var jsonData = JSON.parse(responseBody);",
+									"tests[\"returns a boolean\"] = typeof jsonData === 'boolean';"
+								]
+							}
+						}
+					],
+					"request": {
+						"url": "http://localhost:3000/api/auth/can-sign-up",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/sign-up",
+					"request": {
+						"url": "http://localhost:3000/api/auth/sign-up",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ryan\",\n\t\"email\": \"ryan.nhg@gmail.com\",\n\t\"password\": \"jangleIsEasy\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "/api/auth/sign-in",
+					"request": {
+						"url": {
+							"raw": "http://localhost:3000/api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"auth",
+								"sign-in"
+							],
+							"query": [
+								{
+									"key": "email",
+									"value": "ryan.nhg@gmail.com",
+									"equals": true,
+									"description": ""
+								},
+								{
+									"key": "password",
+									"value": "jangleIsEasy",
+									"equals": true,
+									"description": ""
+								}
+							],
+							"variable": []
+						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
