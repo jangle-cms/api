@@ -10,7 +10,13 @@ module.exports = (core, router, { relative }) => {
 
   router.get('/can-sign-up', (_req, res, next) =>
     core.auth.canSignUp()
-      .then(canSignUp => res.json(canSignUp))
+      .then(canSignUp => res.json({
+        error: false,
+        message: canSignUp
+          ? 'Sign up allowed!'
+          : 'Cannot sign up.',
+        data: canSignUp
+      }))
       .catch(next)
   )
 
