@@ -7,13 +7,16 @@ Jangle Core did all the hard work: Storing content, publishing, history, authent
 
 This API is broken up into these major components:
 
-- [Authentication API](/jangle-cms/api#authentication-api)
-- [List API](/jangle-cms/api#list-api)
-- [Item API](/jangle-cms/api#item-api)
+- [Authentication API](#authentication-api)
+- [List API](#list-api)
+- [Item API]()
 
+---
 
 ## Authentication API
 > Creating users, signing in, getting tokens.
+
+---
 
 ### __Can Sign Up__
 > __`GET`__ `/api/auth/can-sign-up`
@@ -29,7 +32,7 @@ GET /api/auth/can-sign-up
 
 If sign up is allowed:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign up allowed!",
@@ -39,7 +42,7 @@ If sign up is allowed:
 
 If another user already exists:
 
-```json
+```js
 {
     "error": false,
     "message": "Cannot sign up.",
@@ -47,6 +50,7 @@ If another user already exists:
 }
 ```
 
+---
 
 ### __Sign Up__
 > __`POST`__ `/api/auth/sign-up`
@@ -61,7 +65,7 @@ Create a new user for our Jangle instance, if no other users exist in the system
 
 #### Example:
 
-```json
+```js
 {
     "name": "Ryan",
     "email": "ryan.nhg@gmail.com",
@@ -73,7 +77,7 @@ Create a new user for our Jangle instance, if no other users exist in the system
 
 If everything went okay, and the user was signed up:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign up successful!",
@@ -87,7 +91,7 @@ If everything went okay, and the user was signed up:
 
 If a user already exists (`/api/auth/can-sign-up` returned `false`):
 
-```json
+```js
 {
     "error": true,
     "message": "Admin user already exists.",
@@ -97,13 +101,15 @@ If a user already exists (`/api/auth/can-sign-up` returned `false`):
 
 If the user provided was invalid:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not create admin user.",
     "data": null
 }
 ```
+
+---
 
 ### __Sign In__
 > `GET` `/api/auth/sign-in`
@@ -125,7 +131,7 @@ GET /api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy
 
 If the sign in was successful:
 
-```json
+```js
 {
     "error": false,
     "message": "Sign in successful!",
@@ -139,7 +145,7 @@ If the sign in was successful:
 
 If that user doesn't exist or the password doesn't match:
 
-```json
+```js
 {
     "error": true,
     "message": "Failed to sign in.",
@@ -159,35 +165,37 @@ The List API exposes Jangle Core's function using RESTful API standards. Once yo
 Here are all the endpoints for the List API
 
 __Viewing Items__
-- [Any]() - Returns if any items exist.
-- [Count]() - Returns how many items we have.
-- [Find]() - Finds items based on criteria.
-- [Get]() - Gets an item by id.
+- [Any](#any) - Returns if any items exist.
+- [Count](#count) - Returns how many items we have.
+- [Find](#find) - Finds items based on criteria.
+- [Get](#get) - Gets an item by id.
 
 __Editing Items__
-- [Create]() - Create a new item.
-- [Update]() - Fully replace an exising item.
-- [Patch]() - Partially update an exising item.
+- [Create](#create) - Create a new item.
+- [Update](#update) - Fully replace an exising item.
+- [Patch](#patch) - Partially update an exising item.
 
 __Removing Items__
-- [Remove]() - Remove an exising item.
-- [Restore]() - Restore a removed item.
+- [Remove](#remove) - Remove an exising item.
+- [Restore](#restore) - Restore a removed item.
 
 __History__
-- [History]() - View an item's history.
-- [Preview Rollback]() - Preview a rollback, before committing it.
-- [Rollback Version]() - Rollback to a previous version.
+- [History](#history) - View an item's history.
+- [Preview Rollback](#preview-rollback) - Preview a rollback, before committing it.
+- [Rollback Version](#rollback) - Rollback to a previous version.
 
 __Publishing__
-- [Publish]() - Publish an item.
-- [Unpublish]() - Unpublish an item.
-- [Is Live]() - Check if an item is published.
+- [Publish](#publish) - Publish an item.
+- [Unpublish](#unpublish) - Unpublish an item.
+- [Is Live](#is-live) - Check if an item is published.
 
 __Meta__
 - [Overview]() - View information about all lists.
 - [Schema]() - View detailed information about a list.
 
-### Note: Authentication & Tokens
+---
+
+### Authentication & Tokens
 
 Both the List and Items API have certain endpoints that require a user token to interact with our content.
 
@@ -195,7 +203,7 @@ If we try to view unpublished items, edit an item, or delete something, Jangle n
 
 Otherwise, anyone could hit these URLs and ruin our day!
 
-(The [Authentication API](/jangle-cms/api#authentication-api) has endpoints for retrieving a valid user token.)
+(The [Authentication API](#authentication-api) has endpoints for retrieving a valid user token.)
 
 
 #### How to provide a token to Jangle API
@@ -211,7 +219,7 @@ Protected endpoints will check these places for a user token:
     ```
     GET /api/lists/authors?token=our-token
     ```
-
+---
 
 ### __Overview__
 > __`GET`__ `/api/lists`
@@ -222,7 +230,7 @@ __Note:__ Requires user token.
 
 #### Returns
 
-```json
+```js
 {
     "error": false,
     "message": "Found 2 lists.",
@@ -267,7 +275,7 @@ GET /api/lists/people/any?where={ "name": "Ryan" }
 
 If any items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
@@ -277,13 +285,15 @@ If any items were found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
     "data": false
 }
 ```
+
+---
 
 ### __Count__
 > __`GET`__ `/api/lists/:name/count`
@@ -305,7 +315,7 @@ GET /api/lists/people/count?where={ "age": { "$gte": 24 } }
 
 If any items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
@@ -315,13 +325,15 @@ If any items were found:
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
     "data": 0
 }
 ```
+
+---
 
 ###  __Find__
 > __`GET`__ `/api/lists/:name`
@@ -356,28 +368,30 @@ GET /api/lists/people?populate=friends
 
 If items were found:
 
-```json
+```js
 {
     "error": false,
-    "message": "Found 10 people.",
+    "message": "Found 4 people.",
     "data": [
-        { ... },
-        { ... },
-        ...
-        { ... }
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ }
     ]
 }
 ```
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
     "data": []
 }
 ```
+
+---
 
 ###  __Get__
 > __`GET`__ `/api/lists/:name/:id`
@@ -404,26 +418,28 @@ GET /api/lists/people/12345?populate=friends
 
 If the item was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found 1 person.",
     "data": {
         "name": "Ryan",
-        ...
+        /*...*/
     }
 }
 ```
 
 If no items were found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found no people.",
     "data": null
 }
 ```
+
+---
 
 ### __Create__
 > __`POST`__ `/api/lists/:name`
@@ -436,7 +452,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "name": "Ryan",
     "age": 24
@@ -447,7 +463,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully created:
 
-```json
+```js
 {
     "error": false,
     "message": "Person created successfully!",
@@ -455,20 +471,22 @@ If the item was successfully created:
         "_id": 12345,
         "name": "Ryan",
         "age": 24,
-        "jangle": { "version": 1, ... }
+        "jangle": { "version": 1, /*...*/ }
     }
 }
 ```
 
 If the item could not be created:
 
-```json
+```js
 {
     "error": true,
     "message": "Missing required fields: name.",
     "data": null
 }
 ```
+
+---
 
 ### __Update__
 > __`POST`__ `/api/lists/:name/:id`
@@ -481,7 +499,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "name": "Ryan",
     "age": 25
@@ -492,7 +510,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully updated:
 
-```json
+```js
 {
     "error": false,
     "message": "Person updated successfully!",
@@ -500,20 +518,22 @@ If the item was successfully updated:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
 
 If the item could not be updated:
 
-```json
+```js
 {
     "error": true,
     "message": "Missing required fields: age.",
     "data": null
 }
 ```
+
+---
 
 ### __Patch__
 > __`PATCH`__ `/api/lists/:name/:id`
@@ -526,7 +546,7 @@ __Note:__ Requires a user token.
 
 #### Example
 
-```json
+```js
 {
     "age": 26
 }
@@ -536,7 +556,7 @@ __Note:__ Requires a user token.
 
 If the item was successfully updated:
 
-```json
+```js
 {
     "error": false,
     "message": "Person updated successfully!",
@@ -551,7 +571,7 @@ If the item was successfully updated:
 
 If the item could not be updated:
 
-```json
+```js
 {
     "error": true,
     "message": "age must be a number.",
@@ -559,6 +579,7 @@ If the item could not be updated:
 }
 ```
 
+---
 
 ### __Remove__
 > __`DELETE`__ `/api/lists/:name/:id`
@@ -579,7 +600,7 @@ DELETE /api/lists/people/12345
 
 If the item was successfully removed:
 
-```json
+```js
 {
     "error": false,
     "message": "Person removed successfully!",
@@ -587,20 +608,22 @@ If the item was successfully removed:
         "_id": 12345,
         "name": "Ryan",
         "age": 26,
-        "jangle": { "version": 3, ... }
+        "jangle": { "version": 3, /*...*/ }
     }
 }
 ```
 
 If the item could not be created:
 
-```json
+```js
 {
     "error": true,
     "message": "age must be a number.",
     "data": null
 }
 ```
+
+---
 
 ### __Restore__
 > __`POST`__ `/api/lists/:name/:id/restore`
@@ -619,7 +642,7 @@ POST /api/lists/people/12345/restore
 
 If the item was successfully restored:
 
-```json
+```js
 {
     "error": false,
     "message": "Person restored successfully!",
@@ -634,13 +657,15 @@ If the item was successfully restored:
 
 If the item could not be restored:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find a person with id: 12345.",
     "data": null
 }
 ```
+
+---
 
 ### __History__
 > __`GET`__ `/api/lists/:name/:id/history`
@@ -659,28 +684,30 @@ GET /api/lists/people/12345/history
 
 If the item was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Found the item's history.",
     "data": [
-        { ... },
-        { ... },
-        ...
-        { ... }
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ },
+        { /*...*/ }
     ]
 }
 ```
 
 If the item could not be found:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find a person with id: 12345.",
     "data": null
 }
 ```
+
+---
 
 ### __Preview Rollback__
 > __`GET`__ `/api/lists/:name/:id/preview/:version`
@@ -699,7 +726,7 @@ GET /api/lists/people/12345/preview/2
 
 If the version was found:
 
-```json
+```js
 {
     "error": false,
     "message": "Previewing rollback!",
@@ -707,20 +734,22 @@ If the version was found:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
 
 If the item's rollback could not be previewed:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find version 100.",
     "data": null
 }
 ```
+
+---
 
 ### __Rollback__
 > __`POST`__ `/api/lists/:name/:id/rollback/:version`
@@ -739,7 +768,7 @@ POST /api/lists/people/12345/rollback/2
 
 If the version was successfully rolled back:
 
-```json
+```js
 {
     "error": false,
     "message": "Person rolled back successfully!",
@@ -747,20 +776,22 @@ If the version was successfully rolled back:
         "_id": 12345,
         "name": "Ryan",
         "age": 25,
-        "jangle": { "version": 2, ... }
+        "jangle": { "version": 2, /*...*/ }
     }
 }
 ```
 
 If the item could not be rolled back:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find version 100.",
     "data": null
 }
 ```
+
+---
 
 ### __Publish__
 > __`POST`__ `/api/lists/:name/:id/publish`
@@ -779,7 +810,7 @@ POST /api/lists/people/12345/publish
 
 If the item was successfully published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person published successfully!",
@@ -792,13 +823,15 @@ If the item was successfully published:
 
 If the item could not be published:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
     "data": null
 }
 ```
+
+---
 
 ### __Unpublish__
 > __`POST`__ `/api/lists/:name/:id/unpublish`
@@ -817,7 +850,7 @@ POST /api/lists/people/12345/unpublish
 
 If the item was successfully unpublished:
 
-```json
+```js
 {
     "error": false,
     "message": "Person unpublished successfully!",
@@ -830,13 +863,15 @@ If the item was successfully unpublished:
 
 If the item could not be unpublished:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
     "data": null
 }
 ```
+
+---
 
 ### __Is Live__
 > __`GET`__ `/api/lists/:name/:id/is-live`
@@ -853,7 +888,7 @@ POST /api/lists/people/12345/is-live
 
 If the item is published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person is published.",
@@ -863,7 +898,7 @@ If the item is published:
 
 If the item is not published:
 
-```json
+```js
 {
     "error": false,
     "message": "Person is not published.",
@@ -873,7 +908,7 @@ If the item is not published:
 
 If the item could not be found:
 
-```json
+```js
 {
     "error": true,
     "message": "Could not find an item with that id.",
