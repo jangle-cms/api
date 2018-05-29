@@ -5,6 +5,7 @@ const bodyParser = require('body-parser')
 
 const routes = {
   auth: require('./routes/auth'),
+  lists: require('./routes/lists'),
   notFound: require('./routes/not-found'),
   error: require('./routes/error')
 }
@@ -13,18 +14,20 @@ const start = ({
   api: {
     port = process.env.PORT || 3000,
     prefix = ''
-  } = {}
+  } = {},
+  core
 } = {}) => {
   const apiPath = `${prefix}/api`
   const url = `http://localhost:${port}${apiPath}`
   const relative = (path) => url + path
+  const relativeWith = (suffix) => (path) => relative(suffix + path)
 
   const app = express()
   app.use(morgan('tiny'))
   app.use(bodyParser.json())
 
   return jangle
-    .start()
+    .start(core)
     .then(core => {
       const router = express.Router()
 
@@ -37,8 +40,12 @@ const start = ({
       }))
 
       // Authentication API
-      router.use('/auth', routes.auth(core, express.Router(), {
-        relative: (path) => relative('/auth' + path)
+      router.use('/auth', routes.auth(core.auth, express.Router(), {
+        relative: relativeWith('/auth')
+      }))
+
+      router.use('/lists', routes.lists(core.lists, express.Router(), {
+        relative: relativeWith('/lists')
       }))
 
       app.use(apiPath, router)
@@ -54,5 +61,6 @@ const start = ({
 }
 
 module.exports = {
-  start
+  start,
+  Schema: jangle.Schema
 }

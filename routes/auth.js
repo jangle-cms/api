@@ -1,4 +1,4 @@
-module.exports = (core, router, { relative }) => {
+module.exports = (auth, router, { relative }) => {
   router.get('/', (req, res) => res.json({
     message: 'Welcome to the Authentication API!',
     routes: [
@@ -9,7 +9,7 @@ module.exports = (core, router, { relative }) => {
   }))
 
   router.get('/can-sign-up', (_req, res, next) =>
-    core.auth.canSignUp()
+    auth.canSignUp()
       .then(canSignUp => res.json({
         error: false,
         message: canSignUp
@@ -25,7 +25,7 @@ module.exports = (core, router, { relative }) => {
     res,
     next
   ) =>
-    core.auth.signUp({ name, email, password })
+    auth.signUp({ name, email, password })
       .then(user => res.json({
         error: false,
         message: 'Sign up successful!',
@@ -39,7 +39,7 @@ module.exports = (core, router, { relative }) => {
     res,
     next
   ) =>
-    core.auth.signIn(email, password)
+    auth.signIn(email, password)
       .then(user => res.json({
         error: false,
         message: 'Sign in successful!',
