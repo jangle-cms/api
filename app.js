@@ -35,7 +35,8 @@ const start = ({
       router.get('/', (_req, res) => res.json({
         message: 'Welcome to Jangle API!',
         routes: [
-          '/auth'
+          '/auth',
+          '/lists'
         ].map(relative)
       }))
 
@@ -49,8 +50,8 @@ const start = ({
       }))
 
       app.use(apiPath, router)
-      app.use(prefix, routes.notFound)
-      app.use(prefix, routes.error)
+      app.use(apiPath, routes.notFound)
+      app.use(apiPath, routes.error)
 
       app.listen(port, () =>
         console.info(`Jangle API ready at ${url}`)

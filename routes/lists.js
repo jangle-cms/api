@@ -3,6 +3,11 @@ const getToken = (req = {}) =>
     ? req.get('Authorization').substring('Bearer '.length)
     : req.query.token
 
+const errors = {
+  tokenRequired: 'A token is required.',
+  itemNotFound: 'Item not found.'
+}
+
 module.exports = (lists, router, { relative }) => {
   const slugToName = Object.keys(lists)
     .reduce((map, name) => ({ ...map, [name.toLowerCase()]: name }), {})
@@ -13,8 +18,8 @@ module.exports = (lists, router, { relative }) => {
     res.json({
       error: false,
       message: 'Welcome to the Lists API!',
-      data: Object.keys(lists)
-        .map(name => '/' + name.toLowerCase())
+      data: Object.keys(slugToName)
+        .map(slug => '/' + slug)
         .map(relative)
     })
   )
@@ -33,6 +38,9 @@ module.exports = (lists, router, { relative }) => {
       return undefined
     }
   }
+
+  const reject = (reason) =>
+    Promise.reject(String(reason))
 
   // Any
   const anyOptions = (query = {}) => ({
@@ -71,14 +79,22 @@ module.exports = (lists, router, { relative }) => {
   )
 
   // Find
-  const findOptions = (query = {}) => ({
-    where: parse(query.where),
-    select: parse(query.select) || query.select,
-    populate: parse(query.populate) || query.populate,
-    sort: parse(query.sort) || query.sort,
-    page: isNaN(parseInt(query.page))
-      ? 1
-      : parseInt(query.page)
+  const PAGE_SIZE = 5
+  const findOptions = ({
+    where,
+    select,
+    populate,
+    sort,
+    page = 1
+  } = {}) => ({
+    where: parse(where),
+    select: parse(select) || select,
+    populate: parse(populate) || populate,
+    sort: parse(sort) || sort,
+    limit: PAGE_SIZE,
+    skip: (page > 0)
+      ? (page - 1) * PAGE_SIZE
+      : 0
   })
 
   router.get('/:name', (req, res, next) =>
@@ -95,9 +111,9 @@ module.exports = (lists, router, { relative }) => {
   )
 
   // Get
-  const getOptions = (query = {}) => ({
-    select: parse(query.select) || query.select,
-    populate: parse(query.populate) || query.populate
+  const getOptions = ({ select, populate } = {}) => ({
+    select: parse(select) || select,
+    populate: parse(populate) || populate
   })
 
   router.get('/:name/:id', (req, res, next) =>
@@ -105,16 +121,86 @@ module.exports = (lists, router, { relative }) => {
       ? list(req.params.name).get(getToken(req), req.params.id, getOptions(req.query))
       : list(req.params.name).live.get(req.params.id, getOptions(req.query))
     )
-    .then(item => res.json({
-      error: false,
-      message: `Item found!`,
-      data: item
-    }))
+    .then(item => item
+      ? res.json({
+        error: false,
+        message: `Item found!`,
+        data: item
+      })
+      : reject(errors.itemNotFound)
+    )
     .catch(reason =>
       reason.name === 'CastError'
-        ? next('Could not find that item.')
+        ? next(errors.itemNotFound)
         : next(reason)
     )
+  )
+
+  // Create
+  router.post('/:name', (req, res, next) =>
+    Promise.resolve(getToken(req))
+      .then(token => token
+        ? list(req.params.name).create(token, req.body || {})
+        : reject('A token is required.')
+      )
+      .then(item => res.json({
+        error: false,
+        message: `Item created!`,
+        data: item
+      }))
+      .catch(next)
+  )
+
+  // Update & Patch
+  const updateHandler = (functionName) => (req, res, next) =>
+    Promise.resolve(getToken(req))
+      .then(token => token
+        ? list(req.params.name)[functionName](token, req.params.id, req.body || {})
+        : reject(errors.tokenRequired)
+      )
+      .then(item => res.json({
+        error: false,
+        message: `Item updated!`,
+        data: item
+      }))
+      .catch(next)
+
+  // Update
+  const update = updateHandler('update')
+  router.put('/:name/:id', update)
+
+  // Patch
+  const patch = updateHandler('patch')
+  router.patch('/:name/:id', patch)
+
+  // Remove
+  router.delete('/:name/:id', (req, res, next) =>
+    Promise.resolve(getToken(req))
+      .then(token => token
+        ? list(req.params.name).remove(token, req.params.id)
+        : reject(errors.tokenRequired)
+      )
+      .then(item => res.json({
+        error: false,
+        message: `Item removed!`,
+        data: item
+      }))
+      .catch(next)
+  )
+
+  // Restore
+  router.put('/:name/:id/restore', (req, res, next) =>
+    Promise.resolve(getToken(req))
+      .then(token => token
+        ? list(req.params.name).rollback(token, req.params.id)
+        : reject(errors.tokenRequired)
+      )
+      .then(item => res.json({
+        error: false,
+        message: `Item restored!`,
+        data: item
+      }))
+      .catch(next)
   )
 
   return router
