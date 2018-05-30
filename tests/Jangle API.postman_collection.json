@@ -12,7 +12,7 @@
 			"description": "",
 			"item": [
 				{
-					"name": "/api/auth/can-sign-up",
+					"name": "Can Sign Up - /api/auth/can-sign-up",
 					"event": [
 						{
 							"listen": "test",
@@ -26,7 +26,7 @@
 						}
 					],
 					"request": {
-						"url": "http://localhost:3000/api/auth/can-sign-up",
+						"url": "{{URL}}/api/auth/can-sign-up",
 						"method": "GET",
 						"header": [],
 						"body": {},
@@ -35,9 +35,9 @@
 					"response": []
 				},
 				{
-					"name": "/api/auth/sign-up",
+					"name": "Sign Up - /api/auth/sign-up",
 					"request": {
-						"url": "http://localhost:3000/api/auth/sign-up",
+						"url": "{{URL}}/api/auth/sign-up",
 						"method": "POST",
 						"header": [
 							{
@@ -55,15 +55,13 @@
 					"response": []
 				},
 				{
-					"name": "/api/auth/sign-in",
+					"name": "Sign In - /api/auth/sign-in",
 					"request": {
 						"url": {
-							"raw": "http://localhost:3000/api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy",
-							"protocol": "http",
+							"raw": "{{URL}}/api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy",
 							"host": [
-								"localhost"
+								"{{URL}}"
 							],
-							"port": "3000",
 							"path": [
 								"api",
 								"auth",
@@ -85,6 +83,227 @@
 							],
 							"variable": []
 						},
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Lists API",
+			"description": "",
+			"item": [
+				{
+					"name": "Create - /api/lists/people",
+					"request": {
+						"url": "{{URL}}/api/lists/people",
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ryan\",\n\t\"age\": 24\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Any - /api/lists/people/any",
+					"request": {
+						"url": "{{URL}}/api/lists/people/any",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Count - /api/lists/people/count",
+					"request": {
+						"url": "{{URL}}/api/lists/people/count",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Find - /api/lists/people",
+					"request": {
+						"url": "{{URL}}/api/lists/people",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Get - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Update - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ryan?\",\n\t\"age\": 25\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Patch - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\": \"Ryan\"\n}"
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Remove - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Restore - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/restore",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"description": ""
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Public Find - /api/lists/people",
+					"request": {
+						"url": "{{URL}}/api/lists/people",
+						"method": "GET",
+						"header": [],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Public Get - /api/lists/people/:id",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
 						"method": "GET",
 						"header": [],
 						"body": {},
