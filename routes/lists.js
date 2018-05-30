@@ -98,16 +98,27 @@ module.exports = (lists, router, { relative }) => {
   })
 
   router.get('/:name', (req, res, next) =>
-    Promise.resolve(getToken(req)
-      ? list(req.params.name).find(getToken(req), findOptions(req.query))
-      : list(req.params.name).live.find(findOptions(req.query))
-    )
-    .then(items => res.json({
-      error: false,
-      message: `Found ${items.length} ${items.length === 1 ? 'item' : 'items'}.`,
-      data: items
-    }))
-    .catch(next)
+    Promise.resolve(getToken(req))
+      .then(token => Promise.all(
+        token
+          ? [
+            list(req.params.name).count(getToken(req), countOptions(req.query)),
+            list(req.params.name).find(getToken(req), findOptions(req.query))
+          ]
+          : [
+            list(req.params.name).live.count(countOptions(req.query)),
+            list(req.params.name).live.find(findOptions(req.query))
+          ]
+      ))
+      .then(([ total, items ]) => res.json({
+        error: false,
+        message: `Found ${total} ${total === 1 ? 'item' : 'items'}.`,
+        data: {
+          total,
+          items
+        }
+      }))
+      .catch(next)
   )
 
   // Get
