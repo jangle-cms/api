@@ -116,6 +116,12 @@ If the user provided was invalid:
 
 Sign in an existing Jangle user.
 
+__"Why is sign in a `GET` request?"__
+
+Signing in with Jangle doesn't modify anything, all it does is _gets_ you a token.
+
+If you are curious about HTTP verbs, like `GET`, `POST`, `PUT`,`PATCH`, and `DELETE`, here is an [awesome explanation of when to use which](https://restfulapi.net/http-methods/#summary).
+
 #### Params
 
 - `email` - The email address of the user.
@@ -189,10 +195,6 @@ __Publishing__
 - [Unpublish](#unpublish) - Unpublish an item.
 - [Is Live](#is-live) - Check if an item is published.
 
-__Meta__
-- [Overview]() - View information about all lists.
-- [Schema]() - View detailed information about a list.
-
 ---
 
 ### Authentication & Tokens
@@ -210,50 +212,16 @@ Otherwise, anyone could hit these URLs and ruin our day!
 
 Protected endpoints will check these places for a user token:
 
-- `Authorization` header, with the `Bearer` schema (recommended)
+- `Authorization` header, with the `Bearer` schema (__recommended__)
     ```
     Authorization: Bearer our-token
     ```
 
-- As a query parameter in your URL
+- As a query parameter in your URL (for testing)
     ```
     GET /api/lists/authors?token=our-token
     ```
 ---
-
-### __Overview__
-> __`GET`__ `/api/lists`
-
-An overview of all lists in your Jangle collection.
-
-__Note:__ Requires user token.
-
-#### Returns
-
-```js
-{
-    "error": false,
-    "message": "Found 2 lists.",
-    "data": [
-        {
-            "name": "Person",
-            "slug": "people",
-            "labels": {
-                "singular": "Person",
-                "plural": "People"
-            }
-        },
-        {
-            "name": "BlogPost",
-            "slug": "blog-posts",
-            "labels": {
-                "singular": "Blog Post",
-                "plural": "Blog Posts"
-            }
-        }
-    ]
-}
-```
 
 ### __Any__
 > __`GET`__ `/api/lists/:name/any`
@@ -278,7 +246,7 @@ If any items were found:
 ```js
 {
     "error": false,
-    "message": "Found 1 person.",
+    "message": "Found some items.",
     "data": true
 }
 ```
@@ -288,7 +256,7 @@ If no items were found:
 ```js
 {
     "error": false,
-    "message": "Found no people.",
+    "message": "No items found.",
     "data": false
 }
 ```
@@ -318,7 +286,7 @@ If any items were found:
 ```js
 {
     "error": false,
-    "message": "Found 1 person.",
+    "message": "Found 1 item.",
     "data": 1
 }
 ```
@@ -328,7 +296,7 @@ If no items were found:
 ```js
 {
     "error": false,
-    "message": "Found no people.",
+    "message": "Found 0 items.",
     "data": 0
 }
 ```
@@ -362,6 +330,7 @@ GET /api/lists/people?select=name,age
 GET /api/lists/people?where={ "age": { "$gte": 18 } }
 GET /api/lists/people?sort=name
 GET /api/lists/people?populate=friends
+GET /api/lists/people?page=2
 ```
 
 #### Returns
@@ -371,13 +340,18 @@ If items were found:
 ```js
 {
     "error": false,
-    "message": "Found 4 people.",
-    "data": [
-        { /*...*/ },
-        { /*...*/ },
-        { /*...*/ },
-        { /*...*/ }
-    ]
+    "message": "Found 30 items.",
+    "data": {
+        total: 30,
+        items: [
+            { /* 1 */ },
+            { /* 2 */ },
+            { /* 3 */ },
+            { /* 4 */ },
+            /*...*/
+            { /* 25 */ }
+        ]
+    }
 }
 ```
 
@@ -386,8 +360,11 @@ If no items were found:
 ```js
 {
     "error": false,
-    "message": "Found no people.",
-    "data": []
+    "message": "Found 0 items.",
+    "data": {
+        total: 0,
+        items: []
+    }
 }
 ```
 
@@ -421,7 +398,7 @@ If the item was found:
 ```js
 {
     "error": false,
-    "message": "Found 1 person.",
+    "message": "Item found!",
     "data": {
         "name": "Ryan",
         /*...*/
@@ -434,7 +411,7 @@ If no items were found:
 ```js
 {
     "error": false,
-    "message": "Found no people.",
+    "message": "Could not find that item.",
     "data": null
 }
 ```
@@ -466,7 +443,7 @@ If the item was successfully created:
 ```js
 {
     "error": false,
-    "message": "Person created successfully!",
+    "message": "Item created!",
     "data": {
         "_id": 12345,
         "name": "Ryan",
@@ -489,11 +466,11 @@ If the item could not be created:
 ---
 
 ### __Update__
-> __`POST`__ `/api/lists/:name/:id`
+> __`PUT`__ `/api/lists/:name/:id`
 
 Update an existing item in the specified list.
 
-The full item should be provided in the body of the `POST` request.
+The full item should be provided in the body of the `PUT` request.
 
 __Note:__ Requires a user token.
 
@@ -513,7 +490,7 @@ If the item was successfully updated:
 ```js
 {
     "error": false,
-    "message": "Person updated successfully!",
+    "message": "Item updated!",
     "data": {
         "_id": 12345,
         "name": "Ryan",
@@ -559,7 +536,7 @@ If the item was successfully updated:
 ```js
 {
     "error": false,
-    "message": "Person updated successfully!",
+    "message": "Item updated!",
     "data": {
         "_id": 12345,
         "name": "Ryan",
@@ -603,7 +580,7 @@ If the item was successfully removed:
 ```js
 {
     "error": false,
-    "message": "Person removed successfully!",
+    "message": "Item removed!",
     "data": {
         "_id": 12345,
         "name": "Ryan",
@@ -626,17 +603,11 @@ If the item could not be created:
 ---
 
 ### __Restore__
-> __`POST`__ `/api/lists/:name/:id/restore`
+> __`PUT`__ `/api/lists/:name/:id/restore`
 
 Restores an existing item that was deleted, from the specified list.
 
 __Note:__ Requires a user token.
-
-#### Example
-
-```
-POST /api/lists/people/12345/restore
-```
 
 #### Returns
 
@@ -645,7 +616,7 @@ If the item was successfully restored:
 ```js
 {
     "error": false,
-    "message": "Person restored successfully!",
+    "message": "Item restored!",
     "data": {
         "_id": 12345,
         "name": "Ryan",
@@ -660,7 +631,7 @@ If the item could not be restored:
 ```js
 {
     "error": true,
-    "message": "Could not find a person with id: 12345.",
+    "message": "Could not find item.",
     "data": null
 }
 ```
@@ -702,7 +673,7 @@ If the item could not be found:
 ```js
 {
     "error": true,
-    "message": "Could not find a person with id: 12345.",
+    "message": "Could not find item.",
     "data": null
 }
 ```
@@ -826,7 +797,7 @@ If the item could not be published:
 ```js
 {
     "error": true,
-    "message": "Could not find an item with that id.",
+    "message": "Could not find item.",
     "data": null
 }
 ```
@@ -866,7 +837,7 @@ If the item could not be unpublished:
 ```js
 {
     "error": true,
-    "message": "Could not find an item with that id.",
+    "message": "Could not find item.",
     "data": null
 }
 ```
@@ -911,7 +882,7 @@ If the item could not be found:
 ```js
 {
     "error": true,
-    "message": "Could not find an item with that id.",
+    "message": "Could not find item.",
     "data": null
 }
 ```
