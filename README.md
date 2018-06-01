@@ -852,7 +852,7 @@ Determine if an item is currently published.
 #### Example
 
 ```
-POST /api/lists/people/12345/is-live
+GET /api/lists/people/12345/is-live
 ```
 
 #### Returns

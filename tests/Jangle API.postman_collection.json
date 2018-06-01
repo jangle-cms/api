@@ -290,6 +290,108 @@
 					"response": []
 				},
 				{
+					"name": "History - /api/lists/people/:id/history",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/history",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Preview - /api/lists/people/:id/preview/:version",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/preview/1",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Rollback - /api/lists/people/:id/rollback/:version",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/rollback/1",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Publish - /api/lists/people/:id/publish",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/publish",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Unpublish - /api/lists/people/:id/unpublish",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/unpublish",
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
+					"name": "Is Live - /api/lists/people/:id/is-live",
+					"request": {
+						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/is-live",
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"description": ""
+							}
+						],
+						"body": {},
+						"description": ""
+					},
+					"response": []
+				},
+				{
 					"name": "Public Find - /api/lists/people",
 					"request": {
 						"url": "{{URL}}/api/lists/people",
