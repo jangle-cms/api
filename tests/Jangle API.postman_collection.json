@@ -1,15 +1,13 @@
 {
-	"variables": [],
 	"info": {
+		"_postman_id": "041ddfa6-9967-4234-bf7d-123279c3d546",
 		"name": "Jangle API",
-		"_postman_id": "542ff628-06e9-3d3c-48c9-4dd9ddef27f2",
-		"description": "",
-		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
 	"item": [
 		{
 			"name": "Authentication API",
-			"description": "",
+			"description": null,
 			"item": [
 				{
 					"name": "Can Sign Up - /api/auth/can-sign-up",
@@ -26,37 +24,63 @@
 						}
 					],
 					"request": {
-						"url": "{{URL}}/api/auth/can-sign-up",
 						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/auth/can-sign-up",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"can-sign-up"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Sign Up - /api/auth/sign-up",
 					"request": {
-						"url": "{{URL}}/api/auth/sign-up",
 						"method": "POST",
 						"header": [
 							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Ryan\",\n\t\"email\": \"ryan.nhg@gmail.com\",\n\t\"password\": \"jangleIsEasy\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/auth/sign-up",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"auth",
+								"sign-up"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Sign In - /api/auth/sign-in",
 					"request": {
+						"method": "GET",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
 						"url": {
 							"raw": "{{URL}}/api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy",
 							"host": [
@@ -70,23 +94,14 @@
 							"query": [
 								{
 									"key": "email",
-									"value": "ryan.nhg@gmail.com",
-									"equals": true,
-									"description": ""
+									"value": "ryan.nhg@gmail.com"
 								},
 								{
 									"key": "password",
-									"value": "jangleIsEasy",
-									"equals": true,
-									"description": ""
+									"value": "jangleIsEasy"
 								}
-							],
-							"variable": []
-						},
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
+							]
+						}
 					},
 					"response": []
 				}
@@ -94,324 +109,587 @@
 		},
 		{
 			"name": "Lists API",
-			"description": "",
+			"description": null,
 			"item": [
+				{
+					"name": "Public",
+					"description": "",
+					"item": [
+						{
+							"name": "Any - /api/lists/people/any",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people/any",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people",
+										"any"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Count - /api/lists/people/count",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people/count",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people",
+										"count"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Find - /api/lists/people",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Get - /api/lists/people/:id",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people",
+										"{{ITEM_ID}}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Schema - /api/lists/people/schema",
+							"request": {
+								"method": "GET",
+								"header": [
+									{
+										"key": "Authorization",
+										"value": "Bearer {{TOKEN}}"
+									}
+								],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people/schema",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people",
+										"schema"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Is Live - /api/lists/people/:id/is-live",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/is-live",
+									"host": [
+										"{{URL}}"
+									],
+									"path": [
+										"api",
+										"lists",
+										"people",
+										"{{ITEM_ID}}",
+										"is-live"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"auth": {
+						"type": "noauth"
+					},
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"id": "cb208a14-0401-494e-aa6e-e38efe171d99",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						},
+						{
+							"listen": "test",
+							"script": {
+								"id": "5a23b8a0-20a4-4868-8860-87e9e6f628ae",
+								"type": "text/javascript",
+								"exec": [
+									""
+								]
+							}
+						}
+					],
+					"_postman_isSubFolder": true
+				},
 				{
 					"name": "Create - /api/lists/people",
 					"request": {
-						"url": "{{URL}}/api/lists/people",
 						"method": "POST",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							},
-							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Ryan\",\n\t\"age\": 24\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/lists/people",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Any - /api/lists/people/any",
 					"request": {
-						"url": "{{URL}}/api/lists/people/any",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/any",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"any"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Count - /api/lists/people/count",
 					"request": {
-						"url": "{{URL}}/api/lists/people/count",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/count",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"count"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Find - /api/lists/people",
 					"request": {
-						"url": "{{URL}}/api/lists/people",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Get - /api/lists/people/:id",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Update - /api/lists/people/:id",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
 						"method": "PUT",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							},
-							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Ryan?\",\n\t\"age\": 25\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Patch - /api/lists/people/:id",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
 						"method": "PATCH",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							},
-							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": "{\n\t\"name\": \"Ryan\"\n}"
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Remove - /api/lists/people/:id",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
 						"method": "DELETE",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							},
-							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Restore - /api/lists/people/:id",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/restore",
 						"method": "PUT",
 						"header": [
 							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							},
-							{
 								"key": "Content-Type",
-								"value": "application/json",
-								"description": ""
+								"value": "application/json"
 							}
 						],
 						"body": {
 							"mode": "raw",
 							"raw": ""
 						},
-						"description": ""
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/restore",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"restore"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "History - /api/lists/people/:id/history",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/history",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/history",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"history"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Preview - /api/lists/people/:id/preview/:version",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/preview/1",
 						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/preview/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"preview",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Rollback - /api/lists/people/:id/rollback/:version",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/rollback/1",
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/rollback/1",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"rollback",
+								"1"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Publish - /api/lists/people/:id/publish",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/publish",
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/publish",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"publish"
+							]
+						}
 					},
 					"response": []
 				},
 				{
 					"name": "Unpublish - /api/lists/people/:id/unpublish",
 					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/unpublish",
 						"method": "PUT",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Is Live - /api/lists/people/:id/is-live",
-					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}/is-live",
-						"method": "GET",
-						"header": [
-							{
-								"key": "Authorization",
-								"value": "Bearer {{TOKEN}}",
-								"description": ""
-							}
-						],
-						"body": {},
-						"description": ""
-					},
-					"response": []
-				},
-				{
-					"name": "Public Find - /api/lists/people",
-					"request": {
-						"url": "{{URL}}/api/lists/people",
-						"method": "GET",
 						"header": [],
-						"body": {},
-						"description": ""
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "{{URL}}/api/lists/people/{{ITEM_ID}}/unpublish",
+							"host": [
+								"{{URL}}"
+							],
+							"path": [
+								"api",
+								"lists",
+								"people",
+								"{{ITEM_ID}}",
+								"unpublish"
+							]
+						}
 					},
 					"response": []
+				}
+			],
+			"auth": {
+				"type": "bearer",
+				"bearer": [
+					{
+						"key": "token",
+						"value": "{{TOKEN}}",
+						"type": "string"
+					}
+				]
+			},
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"id": "cbeb3440-130d-4582-983d-50488d03b44c",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				},
 				{
-					"name": "Public Get - /api/lists/people/:id",
-					"request": {
-						"url": "{{URL}}/api/lists/people/{{ITEM_ID}}",
-						"method": "GET",
-						"header": [],
-						"body": {},
-						"description": ""
-					},
-					"response": []
+					"listen": "test",
+					"script": {
+						"id": "914f74b9-0265-4bef-abfd-ca9ceae6a8f7",
+						"type": "text/javascript",
+						"exec": [
+							""
+						]
+					}
 				}
 			]
 		}

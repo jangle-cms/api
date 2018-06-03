@@ -1,4 +1,4 @@
-const jangle = require('../core')
+const jangle = require('@jangle/core')
 const express = require('express')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
@@ -23,14 +23,14 @@ const start = ({
   const relativeWith = (suffix) => (path) => relative(suffix + path)
 
   const app = express()
+  const router = express.Router()
+
   app.use(morgan('tiny'))
   app.use(bodyParser.json())
 
   return jangle
     .start(core)
     .then(core => {
-      const router = express.Router()
-
       // Top-level API
       router.get('/', (_req, res) => res.json({
         message: 'Welcome to Jangle API!',
@@ -41,13 +41,21 @@ const start = ({
       }))
 
       // Authentication API
-      router.use('/auth', routes.auth(core.auth, express.Router(), {
-        relative: relativeWith('/auth')
-      }))
+      router.use('/auth', routes.auth(
+        core.auth,
+        express.Router(),
+        { relative: relativeWith('/auth') }
+      ))
 
-      router.use('/lists', routes.lists(core.lists, express.Router(), {
-        relative: relativeWith('/lists')
-      }))
+      return routes.lists(
+        core.lists,
+        express.Router(),
+        { relative: relativeWith('/lists') }
+      )
+    })
+    .then((listRouter) => {
+      // Lists API
+      router.use('/lists', listRouter)
 
       app.use(apiPath, router)
       app.use(apiPath, routes.notFound)

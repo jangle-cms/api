@@ -5,28 +5,20 @@ jangle.start({
   core: {
     secret: 'super-secret',
     lists: {
-      People: {
-        options: {
-          labels: {
-            singular: 'Person',
-            plural: 'People'
-          }
+      Person: new Schema({
+        name: {
+          type: String,
+          required: true
         },
-        schema: new Schema({
-          name: {
-            type: String,
-            required: true
-          },
-          age: {
-            type: Number,
-            required: true
-          },
-          friend: {
-            type: Schema.Types.ObjectId,
-            ref: 'Person'
-          }
-        })
-      }
+        age: {
+          type: Number,
+          required: true
+        },
+        friend: {
+          type: Schema.Types.ObjectId,
+          ref: 'Person'
+        }
+      })
     }
   }
 })
