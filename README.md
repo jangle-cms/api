@@ -116,21 +116,18 @@ If the user provided was invalid:
 
 Sign in an existing Jangle user.
 
-__"Why is sign in a `GET` request?"__
+#### Body
 
-Signing in with Jangle doesn't modify anything, all it does is _gets_ you a token.
-
-If you are curious about HTTP verbs, like `GET`, `POST`, `PUT`,`PATCH`, and `DELETE`, here is an [awesome explanation of when to use which](https://restfulapi.net/http-methods/#summary).
-
-#### Params
-
-- `email` - The email address of the user.
-- `password` - The password of the user.
+- `email` - The email for the user.
+- `password` - The password for the user.
 
 #### Example:
 
-```
-GET /api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy
+```js
+{
+	"email": "ryan.nhg@gmail.com",
+	"password": "jangleIsEasy"
+}
 ```
 
 #### Returns
