@@ -34,8 +34,8 @@ module.exports = (auth, router, { relative }) => {
       .catch(next)
   )
 
-  router.get('/sign-in', (
-    { query: { email, password } = {} } = {},
+  router.post('/sign-in', (
+    { body: { email, password } = {} } = {},
     res,
     next
   ) =>

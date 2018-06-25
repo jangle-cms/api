@@ -75,14 +75,19 @@
 				{
 					"name": "Sign In - /api/auth/sign-in",
 					"request": {
-						"method": "GET",
-						"header": [],
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
 						"body": {
 							"mode": "raw",
-							"raw": ""
+							"raw": "{\n\t\"email\": \"ryan.nhg@gmail.com\",\n\t\"password\": \"jangleIsEasy\"\n}"
 						},
 						"url": {
-							"raw": "{{URL}}/api/auth/sign-in?email=ryan.nhg@gmail.com&password=jangleIsEasy",
+							"raw": "{{URL}}/api/auth/sign-in",
 							"host": [
 								"{{URL}}"
 							],
@@ -90,16 +95,6 @@
 								"api",
 								"auth",
 								"sign-in"
-							],
-							"query": [
-								{
-									"key": "email",
-									"value": "ryan.nhg@gmail.com"
-								},
-								{
-									"key": "password",
-									"value": "jangleIsEasy"
-								}
 							]
 						}
 					},
