@@ -85,12 +85,12 @@ module.exports = (lists, router, { relative }) =>
           ? protectedList(req).then(({ token, list }) => list.any(token, anyOptions(req.query)))
           : list(req).then(list => list.live.any(anyOptions(req.query)))
         )
-        .then(success(res, hasAny =>
-          hasAny
-            ? 'Found some items.'
-            : 'No items found.'
-        ))
-        .catch(next)
+          .then(success(res, hasAny =>
+            hasAny
+              ? 'Found some items.'
+              : 'No items found.'
+          ))
+          .catch(next)
       )
 
       // Count
@@ -101,10 +101,10 @@ module.exports = (lists, router, { relative }) =>
           ? protectedList(req).then(({ token, list }) => list.count(token, countOptions(req.query)))
           : list(req).then(list => list.live.count(countOptions(req.query)))
         )
-        .then(success(res, count =>
-          `Found ${count} ${count === 1 ? 'item' : 'items'}.`
-        ))
-        .catch(next)
+          .then(success(res, count =>
+            `Found ${count} ${count === 1 ? 'item' : 'items'}.`
+          ))
+          .catch(next)
       )
 
       // Find
@@ -168,13 +168,13 @@ module.exports = (lists, router, { relative }) =>
           ? protectedList(req).then(({ token, list }) => list.get(getToken(req), req.params.id, getOptions(req.query)))
           : list(req).then(list => list.live.get(req.params.id, getOptions(req.query)))
         )
-        .then(rejectIfNull)
-        .then(success(res, item => `Item found.`))
-        .catch(reason =>
-          reason.name === 'CastError'
-            ? next(errors.itemNotFound)
-            : next(reason)
-        )
+          .then(rejectIfNull)
+          .then(success(res, item => `Item found.`))
+          .catch(reason =>
+            reason.name === 'CastError'
+              ? next(errors.itemNotFound)
+              : next(reason)
+          )
       )
 
       // Create
@@ -269,6 +269,5 @@ module.exports = (lists, router, { relative }) =>
       )
 
       return router
-    }
-  )
-  .catch(reason => console.error(reason))
+    })
+    .catch(reason => console.error(reason))
