@@ -1,10 +1,6 @@
 {
   "name": "@jangle/api",
-<<<<<<< HEAD
   "version": "0.3.1",
-=======
-  "version": "0.2.4",
->>>>>>> 3d7028c68f0bb27a8cc2b4fca901a1741dce8f83
   "description": "A RESTful API built on top of Jangle Core.",
   "main": "app.js",
   "scripts": {
@@ -27,11 +23,7 @@
   },
   "homepage": "https://github.com/jangle-cms/api#readme",
   "dependencies": {
-<<<<<<< HEAD
-    "@jangle/core": "0.3.1",
-=======
-    "@jangle/core": "0.2.4",
->>>>>>> 3d7028c68f0bb27a8cc2b4fca901a1741dce8f83
+    "@jangle/core": "0.3.2",
     "body-parser": "^1.18.3",
     "express": "^4.16.3",
     "morgan": "^1.9.0"
