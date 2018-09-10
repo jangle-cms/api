@@ -140,8 +140,8 @@ module.exports = (lists, router, { relative }) =>
           .then(token => Promise.all(
             token
               ? [
-                list(req).then(list => list.count(token, countOptions(req.query))),
-                list(req).then(list => list.find(token, findOptions(req.query)))
+                list(req).then(list => list.count(token)(countOptions(req.query))),
+                list(req).then(list => list.find(token)(findOptions(req.query)))
               ]
               : [
                 list(req).then(list => list.live.count(countOptions(req.query))),
@@ -174,7 +174,7 @@ module.exports = (lists, router, { relative }) =>
 
       router.get('/:name/:id', (req, res, next) =>
         Promise.resolve(getToken(req)
-          ? protectedList(req).then(({ token, list }) => list.get(getToken(req), req.params.id, getOptions(req.query)))
+          ? protectedList(req).then(({ token, list }) => list.get(getToken(req))(req.params.id, getOptions(req.query)))
           : list(req).then(list => list.live.get(req.params.id, getOptions(req.query)))
         )
         .then(rejectIfNull)
@@ -189,7 +189,7 @@ module.exports = (lists, router, { relative }) =>
       // Create
       router.post('/:name', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.create(token, req.body || {}))
+          .then(({ token, list }) => list.create(token)(req.body || {}))
           .then(success(res, `Item created.`))
           .catch(next)
       )
@@ -197,7 +197,7 @@ module.exports = (lists, router, { relative }) =>
       // Update & Patch
       const updateHandler = (functionName) => (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list[functionName](token, req.params.id, req.body || {}))
+          .then(({ token, list }) => list[functionName](token)(req.params.id, req.body || {}))
           .then(success(res, `Item updated.`))
           .catch(next)
 
@@ -212,7 +212,7 @@ module.exports = (lists, router, { relative }) =>
       // Remove
       router.delete('/:name/:id', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.remove(token, req.params.id))
+          .then(({ token, list }) => list.remove(token)(req.params.id))
           .then(success(res, `Item removed.`))
           .catch(next)
       )
@@ -220,7 +220,7 @@ module.exports = (lists, router, { relative }) =>
       // Restore
       router.put('/:name/:id/restore', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.rollback(token, req.params.id))
+          .then(({ token, list }) => list.rollback(token)(req.params.id))
           .then(success(res, `Item restored.`))
           .catch(next)
       )
@@ -228,7 +228,7 @@ module.exports = (lists, router, { relative }) =>
       // History
       router.get('/:name/:id/history', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.history(token, req.params.id))
+          .then(({ token, list }) => list.history(token)(req.params.id))
           .then(success(res, `Item history found.`))
           .catch(next)
       )
@@ -236,7 +236,7 @@ module.exports = (lists, router, { relative }) =>
       // Preview
       router.get('/:name/:id/preview/:version', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.previewRollback(token, req.params.id, req.params.version))
+          .then(({ token, list }) => list.previewRollback(token)(req.params.id, req.params.version))
           .then(success(res, `Previewing rollback.`))
           .catch(next)
       )
@@ -244,7 +244,7 @@ module.exports = (lists, router, { relative }) =>
       // Rollback
       router.put('/:name/:id/rollback/:version', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.rollback(token, req.params.id, req.params.version))
+          .then(({ token, list }) => list.rollback(token)(req.params.id, req.params.version))
           .then(success(res, `Rollback successful.`))
           .catch(next)
       )
@@ -252,7 +252,7 @@ module.exports = (lists, router, { relative }) =>
       // Publish
       router.put('/:name/:id/publish', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.publish(token, req.params.id))
+          .then(({ token, list }) => list.publish(token)(req.params.id))
           .then(success(res, `Item published.`))
           .catch(next)
       )
@@ -260,7 +260,7 @@ module.exports = (lists, router, { relative }) =>
       // Unpublish
       router.put('/:name/:id/unpublish', (req, res, next) =>
         protectedList(req)
-          .then(({ token, list }) => list.unpublish(token, req.params.id))
+          .then(({ token, list }) => list.unpublish(token)(req.params.id))
           .then(success(res, `Item unpublished.`))
           .catch(next)
       )
