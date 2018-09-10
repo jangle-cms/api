@@ -36,14 +36,23 @@ module.exports = (lists, router, { relative }) =>
             list
           }))
 
+      const simpleSchema = (slug) =>
+        lists[slugMap[slug]].schema()
+          .then(schema => {
+            delete schema.fields
+            return schema
+          })
+
       router.get('/', (req, res) =>
-        res.json({
-          error: false,
-          message: 'Welcome to the Lists API!',
-          data: Object.keys(slugMap)
-            .map(slug => '/' + slug)
-            .map(relative)
-        })
+        Promise.resolve(Object.keys(slugMap))
+          .then(slugs => Promise.all(slugs.map(simpleSchema)))
+          .then(schemas =>
+            res.json({
+              error: false,
+              message: 'Welcome to the Lists API!',
+              data: schemas
+            })
+          )
       )
 
       // Check for list

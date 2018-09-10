@@ -13,9 +13,10 @@ const routes = {
 const start = ({
   api: {
     port = process.env.PORT || 3000,
-    prefix = ''
+    prefix = '',
+    _print = true
   } = {},
-  core
+  ...core
 } = {}) => {
   const apiPath = `${prefix}/api`
   const url = `http://localhost:${port}${apiPath}`
@@ -62,7 +63,7 @@ const start = ({
       app.use(apiPath, routes.error)
 
       app.listen(port, () =>
-        console.info(`Jangle API ready at ${url}`)
+        _print ? console.info(`Jangle API ready at ${url}`) : undefined
       )
 
       return app
