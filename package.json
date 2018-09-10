@@ -1,6 +1,6 @@
 {
   "name": "@jangle/api",
-  "version": "0.3.1",
+  "version": "0.3.2",
   "description": "A RESTful API built on top of Jangle Core.",
   "main": "app.js",
   "scripts": {
