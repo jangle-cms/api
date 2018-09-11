@@ -762,7 +762,7 @@ If the item could not be rolled back:
 ---
 
 ### __Publish__
-> __`POST`__ `/api/lists/:name/:id/publish`
+> __`PUT`__ `/api/lists/:name/:id/publish`
 
 Publish an existing item.
 
@@ -771,7 +771,7 @@ __Note:__ Requires a user token.
 #### Example
 
 ```
-POST /api/lists/people/12345/publish
+PUT /api/lists/people/12345/publish
 ```
 
 #### Returns
@@ -802,7 +802,7 @@ If the item could not be published:
 ---
 
 ### __Unpublish__
-> __`POST`__ `/api/lists/:name/:id/unpublish`
+> __`PUT`__ `/api/lists/:name/:id/unpublish`
 
 Unpublish an existing item.
 
@@ -811,7 +811,7 @@ __Note:__ Requires a user token.
 #### Example
 
 ```
-POST /api/lists/people/12345/unpublish
+PUT /api/lists/people/12345/unpublish
 ```
 
 #### Returns
