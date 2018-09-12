@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/jangle-cms/api#readme",
   "dependencies": {
-    "@jangle/core": "0.5.1",
+    "@jangle/core": "0.5.0",
     "body-parser": "^1.18.3",
     "cors": "^2.8.4",
     "express": "^4.16.3",
