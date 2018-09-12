@@ -4,18 +4,16 @@ const { Schema } = jangle
 jangle.start({
   secret: 'super-secret',
   lists: {
-    Person: new Schema({
+    'Blog Post': new Schema({
       name: {
+        label: 'Title',
         type: String,
         required: true
       },
-      age: {
-        type: Number,
-        required: true
-      },
-      friend: {
-        type: Schema.Types.ObjectId,
-        ref: 'Person'
+      content: {
+        type: String,
+        required: true,
+        richText: true
       }
     })
   }

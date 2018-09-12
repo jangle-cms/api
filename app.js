@@ -1,5 +1,6 @@
 const jangle = require('@jangle/core')
 const express = require('express')
+const cors = require('cors')
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
 
@@ -14,6 +15,7 @@ const start = ({
   api: {
     port = process.env.PORT || 3000,
     prefix = '',
+    allowCors = true,
     _print = true
   } = {},
   ...core
@@ -26,6 +28,9 @@ const start = ({
   const app = express()
   const router = express.Router()
 
+  if (allowCors) {
+    app.use(cors())
+  }
   app.use(morgan('tiny'))
   app.use(bodyParser.json())
 
